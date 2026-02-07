@@ -74,7 +74,12 @@
     <None Include="colorTexture.frag">
       <Filter>Shader Files</Filter>
     </None>
-    <None Include="twoTextures.frag" />
+    <None Include="twoTextures.frag">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="reverseSmiley.frag">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">

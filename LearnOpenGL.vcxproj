@@ -167,6 +167,7 @@
     <None Include="colorTexture.vert" />
     <None Include="positionInput.frag" />
     <None Include="positionOut.vert" />
+    <None Include="reverseSmiley.frag" />
     <None Include="shader.frag" />
     <None Include="shader.vert" />
     <None Include="twoTextures.frag" />

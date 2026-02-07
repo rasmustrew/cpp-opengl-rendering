@@ -31,7 +31,7 @@ int main() {
 
 		glViewport(0, 0, 800, 600);
 
-		Shader shaderProgram("colorTexture.vert", "twoTextures.frag");
+		Shader shaderProgram("colorTexture.vert", "reverseSmiley.frag");
 		shaderProgram.use();
 
 		createBasicTexture("resources/container.jpg", 0);
