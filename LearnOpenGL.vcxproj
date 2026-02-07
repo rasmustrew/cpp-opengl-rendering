@@ -150,7 +150,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mouse.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="triangle.h" />
@@ -179,7 +181,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="box3D.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="iGpuDataLayer.h" />
+    <ClInclude Include="mouse.h" />
     <ClInclude Include="rectangleTexture.h" />
     <ClInclude Include="rectangleWrappingExperiment.h" />
     <ClInclude Include="shader.h" />

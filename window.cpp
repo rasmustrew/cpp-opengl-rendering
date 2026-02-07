@@ -1,3 +1,4 @@
+#include "mouse.h"
 #include "window.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -28,12 +29,16 @@ auto setupWindow() -> GLFWwindow* {
 	}
 	glfwMakeContextCurrent(window);
 
-
-
-
-
-
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+
 	return window;
+}
+
+void setupInput(GLFWwindow* window, windowCallbackData& callbackData) {
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetWindowUserPointer(window, &callbackData);
+	glfwSetScrollCallback(window, scroll_callback);
+
 }

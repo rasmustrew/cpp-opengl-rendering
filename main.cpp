@@ -1,4 +1,6 @@
 #include "box3D.h"
+#include "camera.h"
+#include "mouse.h"
 #include "rectangleColoursTexture.h"
 #include "rectangleTexture.h"
 #include "rectangleWrappingExperiment.h"
@@ -15,19 +17,29 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-struct camera {
-	glm::vec3 position;
-	glm::vec3 front;
-	glm::vec3 up;
+struct mvpMatrices {
+	glm::mat4 model;
+	glm::mat4 view;
+	glm::mat4 projection;
 };
 
+mvpMatrices createMvpMatrices(const camera& cam) {
+	mvpMatrices matrices;
+	matrices.model = glm::mat4(1.0f);
+	matrices.model = glm::rotate(matrices.model, glm::radians(-65.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	matrices.view = glm::lookAt(cam.position, cam.position + cam.front, cam.up);
+	matrices.projection = glm::perspective(glm::radians(cam.fov), 800.0f / 600.0f, 0.1f, 100.0f);
+	return matrices;
+}
 
+float getTime() {
+	return static_cast<float>(glfwGetTime());
+}
 
-
-void processInput(GLFWwindow* window, camera& cam) {
+void processInput(GLFWwindow* window, camera& cam, float deltaTime) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	const float cameraSpeed = 0.05f; // adjust accordingly
+	const float cameraSpeed = 2.5f * deltaTime;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		cam.position += cameraSpeed * cam.front;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -41,15 +53,18 @@ void processInput(GLFWwindow* window, camera& cam) {
 int main() {
 	try {
 
+		camera cam = createCamera();
+		mouseState initialMouseState{ 400.0f, 300.0f, -90.0f, 0.0f };
+		windowCallbackData callbackData{ cam, initialMouseState };
 		GLFWwindow* window = setupWindow();
+		setupInput(window, callbackData);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 			std::cout << "Failed to initialize GLAD" << std::endl;
 			return -1;
 		}
-
-
 		glViewport(0, 0, 800, 600);
+
 
 		Shader shaderProgram("mvpTransform.vert", "twoTextures.frag");
 		shaderProgram.use();
@@ -59,24 +74,10 @@ int main() {
 		shaderProgram.setInt("texture1", 0);
 		shaderProgram.setInt("texture2", 1);
 
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, glm::radians(-65.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-		camera cam;
-		cam.position = glm::vec3(0.0f, 0.0f, 3.0f);
-		cam.front = glm::vec3(0.0f, 0.0f, -1.0f);
-		cam.up = glm::vec3(0.0f, 1.0f, 0.0f);
-
-		glm::mat4 view;
-		view = glm::lookAt(cam.position, cam.position + cam.front, cam.up);
-
-		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-
-
-		shaderProgram.setMat4("model", model);
-		shaderProgram.setMat4("view", view);
-		shaderProgram.setMat4("projection", projection);
+		mvpMatrices mvp = createMvpMatrices(cam);
+		shaderProgram.setMat4("model", mvp.model);
+		shaderProgram.setMat4("view", mvp.view);
+		shaderProgram.setMat4("projection", mvp.projection);
 
 		Box3D box{};
 		box.setup();
@@ -96,11 +97,19 @@ int main() {
 			glm::vec3(-1.3f,  1.0f, -1.5f)
 		};
 
+
 		// -------------- Render loop --------------
+
+		float deltaTime = 0.0f;	// Time between current frame and last frame
+		float lastFrame = 0.0f; // Time of last frame
 
 		while (!glfwWindowShouldClose(window)) {
 
-			processInput(window, cam);
+			float currentFrame = getTime();
+			deltaTime = currentFrame - lastFrame;
+			lastFrame = currentFrame;
+
+			processInput(window, cam, deltaTime);
 
 			shaderProgram.use();
 
@@ -108,23 +117,22 @@ int main() {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			for (unsigned int i = 0; i < 10; i++) {
-				model = glm::mat4(1.0f);
-				model = glm::translate(model, cubePositions[i]);
+				mvp.model = glm::mat4(1.0f);
+				mvp.model = glm::translate(mvp.model, cubePositions[i]);
 				float angle = 20.0f * i;
 				if (i % 3 == 0) {
-					angle = static_cast<float>(glfwGetTime()) * 25.0f;
+					angle = getTime() * 25.0f;
 				}
-				model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-				shaderProgram.setMat4("model", model);
+				mvp.model = glm::rotate(mvp.model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+				shaderProgram.setMat4("model", mvp.model);
 				box.draw();
 			}
 
 
-			view = glm::lookAt(cam.position, cam.position + cam.front, cam.up);
-			shaderProgram.setMat4("view", view);
-
-
-
+			mvp.view = glm::lookAt(cam.position, cam.position + cam.front, cam.up);
+			mvp.projection = glm::perspective(glm::radians(cam.fov), 800.0f / 600.0f, 0.1f, 100.0f);
+			shaderProgram.setMat4("view", mvp.view);
+			shaderProgram.setMat4("projection", mvp.projection);
 
 			box.draw();
 
