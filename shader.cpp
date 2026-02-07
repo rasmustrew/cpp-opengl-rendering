@@ -15,8 +15,7 @@ std::string readShaderSource(const char* filepath) {
 		return shaderStream.str();
 	}
 	catch (std::ifstream::failure e) {
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
-		return "";
+		throw std::runtime_error("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " + std::string(filepath));
 	}
 }
 
