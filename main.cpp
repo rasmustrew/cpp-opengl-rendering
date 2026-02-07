@@ -15,9 +15,13 @@
 
 
 
-void processInput(GLFWwindow* window) {
+void processInput(GLFWwindow* window, float& mixValue) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		mixValue = std::min(1.0f, mixValue + 0.01f);
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		mixValue = std::max(0.0f, mixValue - 0.01f);
 }
 
 int main() {
@@ -33,12 +37,17 @@ int main() {
 
 		glViewport(0, 0, 800, 600);
 
-		Shader shaderProgram("colorTexture.vert", "colorTexture.frag");
+		Shader shaderProgram("colorTexture.vert", "texturesVariableMix.frag");
 		shaderProgram.use();
 
-		createBasicTexture("resources/awesomeface.png", 0, GL_REPEAT, GL_NEAREST);
+		createBasicTexture("resources/container.jpg", 0);
+		createBasicTexture("resources/awesomeface.png", 1);
+		shaderProgram.setInt("texture1", 0);
+		shaderProgram.setInt("texture2", 1);
+		float mixValue = 0.5f;
 
-		TextureZoomingExperiment rectangle{};
+
+		RectangleColoursTexture rectangle{};
 		rectangle.setup();
 
 
@@ -49,13 +58,14 @@ int main() {
 
 		while (!glfwWindowShouldClose(window)) {
 
-			processInput(window);
+			processInput(window, mixValue);
 
 
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			shaderProgram.use();
+			shaderProgram.setFloat("mixValue", mixValue);
 			rectangle.draw();
 
 			glfwSwapBuffers(window);

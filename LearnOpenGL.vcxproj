@@ -170,6 +170,7 @@
     <None Include="reverseSmiley.frag" />
     <None Include="shader.frag" />
     <None Include="shader.vert" />
+    <None Include="texturesVariableMix.frag" />
     <None Include="twoTextures.frag" />
     <None Include="vcpkg-configuration.json" />
     <None Include="vcpkg.json" />

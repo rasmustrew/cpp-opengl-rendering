@@ -80,6 +80,9 @@
     <None Include="reverseSmiley.frag">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="texturesVariableMix.frag">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
