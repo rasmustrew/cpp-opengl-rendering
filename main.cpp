@@ -1,3 +1,4 @@
+#include "box3D.h"
 #include "rectangleColoursTexture.h"
 #include "rectangleTexture.h"
 #include "rectangleWrappingExperiment.h"
@@ -37,7 +38,7 @@ int main() {
 
 		glViewport(0, 0, 800, 600);
 
-		Shader shaderProgram("matrixTransform.vert", "twoTextures.frag");
+		Shader shaderProgram("mvpTransform.vert", "twoTextures.frag");
 		shaderProgram.use();
 
 		createBasicTexture("resources/container.jpg", 0);
@@ -45,14 +46,25 @@ int main() {
 		shaderProgram.setInt("texture1", 0);
 		shaderProgram.setInt("texture2", 1);
 
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(-65.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+		glm::mat4 view = glm::mat4(1.0f);
+		// note that we're translating the scene in the reverse direction of where we want to move
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+		glm::mat4 projection;
+		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
 
+		shaderProgram.setMat4("model", model);
+		shaderProgram.setMat4("view", view);
+		shaderProgram.setMat4("projection", projection);
 
+		Box3D box{};
+		box.setup();
 
-		RectangleTexture rectangle{};
-		rectangle.setup();
-
-
+		glEnable(GL_DEPTH_TEST);
 
 
 
@@ -64,23 +76,16 @@ int main() {
 
 
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			shaderProgram.use();
 
-			glm::mat4 trans = glm::mat4(1.0f);
-			trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-			trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-			shaderProgram.setMat4("transform", trans);
+			model = glm::mat4(1.0f);
+			model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+			shaderProgram.setMat4("model", model);
 
-			rectangle.draw();
+			box.draw();
 
-			glm::mat4 trans2 = glm::mat4(1.0f);
-			trans2 = glm::translate(trans2, glm::vec3(-0.5f, 0.5f, 0.0f));
-			trans2 = glm::scale(trans2, glm::vec3((sin((float)glfwGetTime()) + 1.0f) / 2.0f));
-
-			shaderProgram.setMat4("transform", trans2);
-			rectangle.draw();
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();

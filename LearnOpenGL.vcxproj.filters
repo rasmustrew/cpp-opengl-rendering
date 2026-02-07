@@ -86,6 +86,7 @@
     <None Include="matrixTransform.vert">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="mvpTransform.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -122,6 +123,9 @@
       <Filter>Header Files\GpuDataLayer</Filter>
     </ClInclude>
     <ClInclude Include="rectangleTexture.h">
+      <Filter>Header Files\GpuDataLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="box3D.h">
       <Filter>Header Files\GpuDataLayer</Filter>
     </ClInclude>
   </ItemGroup>

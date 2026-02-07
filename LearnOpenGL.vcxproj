@@ -166,6 +166,7 @@
     <None Include="colorTexture.frag" />
     <None Include="colorTexture.vert" />
     <None Include="matrixTransform.vert" />
+    <None Include="mvpTransform.vert" />
     <None Include="positionInput.frag" />
     <None Include="positionOut.vert" />
     <None Include="reverseSmiley.frag" />
@@ -177,6 +178,7 @@
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="box3D.h" />
     <ClInclude Include="iGpuDataLayer.h" />
     <ClInclude Include="rectangleTexture.h" />
     <ClInclude Include="rectangleWrappingExperiment.h" />
