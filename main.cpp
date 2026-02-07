@@ -31,8 +31,13 @@ int main() {
 
 		glViewport(0, 0, 800, 600);
 
-		Shader shaderProgram("colorTexture.vert", "colorTexture.frag");
-		createBasicTexture("resources/container.jpg");
+		Shader shaderProgram("colorTexture.vert", "twoTextures.frag");
+		shaderProgram.use();
+
+		createBasicTexture("resources/container.jpg", 0);
+		createBasicTexture("resources/awesomeface.png", 1);
+		shaderProgram.setInt("texture1", 0);
+		shaderProgram.setInt("texture2", 1);
 
 		RectangleColoursTexture rectangle{};
 		rectangle.setup();

@@ -169,6 +169,7 @@
     <None Include="positionOut.vert" />
     <None Include="shader.frag" />
     <None Include="shader.vert" />
+    <None Include="twoTextures.frag" />
     <None Include="vcpkg-configuration.json" />
     <None Include="vcpkg.json" />
   </ItemGroup>
