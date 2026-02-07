@@ -1,4 +1,5 @@
 #include "rectangleColoursTexture.h"
+#include "rectangleWrappingExperiment.h"
 #include "shader.h"
 #include "texture.h"
 #include "triangle.h"
@@ -31,15 +32,15 @@ int main() {
 
 		glViewport(0, 0, 800, 600);
 
-		Shader shaderProgram("colorTexture.vert", "reverseSmiley.frag");
+		Shader shaderProgram("colorTexture.vert", "twoTextures.frag");
 		shaderProgram.use();
 
-		createBasicTexture("resources/container.jpg", 0);
+		createBasicTexture("resources/container.jpg", 0, GL_CLAMP_TO_EDGE);
 		createBasicTexture("resources/awesomeface.png", 1);
 		shaderProgram.setInt("texture1", 0);
 		shaderProgram.setInt("texture2", 1);
 
-		RectangleColoursTexture rectangle{};
+		RectangleWrappingExperiment rectangle{};
 		rectangle.setup();
 
 
