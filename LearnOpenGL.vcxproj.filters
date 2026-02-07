@@ -83,6 +83,9 @@
     <None Include="texturesVariableMix.frag">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="matrixTransform.vert">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -116,6 +119,9 @@
       <Filter>Header Files\GpuDataLayer</Filter>
     </ClInclude>
     <ClInclude Include="textureZoomingExperiment.h">
+      <Filter>Header Files\GpuDataLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="rectangleTexture.h">
       <Filter>Header Files\GpuDataLayer</Filter>
     </ClInclude>
   </ItemGroup>

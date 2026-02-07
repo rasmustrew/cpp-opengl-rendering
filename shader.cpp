@@ -1,6 +1,9 @@
 #include "shader.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
 std::string readShaderSource(const char* filepath) {
@@ -100,15 +103,23 @@ void Shader::use() {
 }
 
 void Shader::setBool(const std::string& name, bool value) const {
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+	const GLint location = glGetUniformLocation(ID, name.c_str());
+	glUniform1i(location, (int)value);
 }
 
 void Shader::setInt(const std::string& name, int value) const {
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+	const GLint location = glGetUniformLocation(ID, name.c_str());
+	glUniform1i(location, value);
 }
 
 void Shader::setFloat(const std::string& name, float value) const {
-	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+	const GLint location = glGetUniformLocation(ID, name.c_str());
+	glUniform1f(location, value);
+}
+
+void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
+	const GLint location = glGetUniformLocation(ID, name.c_str());
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 }
 
 

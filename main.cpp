@@ -1,4 +1,5 @@
 #include "rectangleColoursTexture.h"
+#include "rectangleTexture.h"
 #include "rectangleWrappingExperiment.h"
 #include "shader.h"
 #include "texture.h"
@@ -8,6 +9,9 @@
 #include "window.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
 
@@ -15,13 +19,9 @@
 
 
 
-void processInput(GLFWwindow* window, float& mixValue) {
+void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		mixValue = std::min(1.0f, mixValue + 0.01f);
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		mixValue = std::max(0.0f, mixValue - 0.01f);
 }
 
 int main() {
@@ -37,17 +37,19 @@ int main() {
 
 		glViewport(0, 0, 800, 600);
 
-		Shader shaderProgram("colorTexture.vert", "texturesVariableMix.frag");
+		Shader shaderProgram("matrixTransform.vert", "twoTextures.frag");
 		shaderProgram.use();
 
 		createBasicTexture("resources/container.jpg", 0);
 		createBasicTexture("resources/awesomeface.png", 1);
 		shaderProgram.setInt("texture1", 0);
 		shaderProgram.setInt("texture2", 1);
-		float mixValue = 0.5f;
 
 
-		RectangleColoursTexture rectangle{};
+
+
+
+		RectangleTexture rectangle{};
 		rectangle.setup();
 
 
@@ -58,14 +60,20 @@ int main() {
 
 		while (!glfwWindowShouldClose(window)) {
 
-			processInput(window, mixValue);
+			processInput(window);
 
 
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			shaderProgram.use();
-			shaderProgram.setFloat("mixValue", mixValue);
+
+			glm::mat4 trans = glm::mat4(1.0f);
+			trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+			trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+			shaderProgram.setMat4("transform", trans);
+
 			rectangle.draw();
 
 			glfwSwapBuffers(window);
