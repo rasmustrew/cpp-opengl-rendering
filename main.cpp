@@ -36,6 +36,7 @@ int main() {
 			return -1;
 		}
 
+
 		glViewport(0, 0, 800, 600);
 
 		Shader shaderProgram("positionOut.vert", "positionInput.frag");
