@@ -1,4 +1,6 @@
+#include "rectangleColoursTexture.h"
 #include "shader.h"
+#include "texture.h"
 #include "triangle.h"
 #include "triangleColours.h"
 #include "window.h"
@@ -8,16 +10,6 @@
 
 
 
-float vertices[] = {
-	 0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f, -0.5f, 0.0f,  // bottom left
-	-0.5f,  0.5f, 0.0f   // top left 
-};
-unsigned int indices[] = {  // note that we start from 0!
-	0, 1, 3,   // first triangle
-	1, 2, 3    // second triangle
-};
 
 
 
@@ -39,18 +31,14 @@ int main() {
 
 		glViewport(0, 0, 800, 600);
 
-		Shader shaderProgram("positionOut.vert", "positionInput.frag");
+		Shader shaderProgram("colorTexture.vert", "colorTexture.frag");
+		createBasicTexture("resources/container.jpg");
 
-		TriangleColours triangle{};
-		triangle.setup();
+		RectangleColoursTexture rectangle{};
+		rectangle.setup();
 
 
-		// -------------- Element Buffer Object (EBO) setup --------------
-		unsigned int EBO;
-		glGenBuffers(1, &EBO);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 
 		// -------------- Render loop --------------
@@ -64,7 +52,7 @@ int main() {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			shaderProgram.use();
-			triangle.draw();
+			rectangle.draw();
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();

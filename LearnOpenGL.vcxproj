@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="triangle.h" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
@@ -162,6 +163,8 @@
     <None Include="colorInputUpsideDown.vert" />
     <None Include="colorUniform.frag" />
     <None Include="colorInputMoveRight.vert" />
+    <None Include="colorTexture.frag" />
+    <None Include="colorTexture.vert" />
     <None Include="positionInput.frag" />
     <None Include="positionOut.vert" />
     <None Include="shader.frag" />
@@ -172,7 +175,9 @@
   <ItemGroup>
     <ClInclude Include="iGpuDataLayer.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="triangleColours.h" />
+    <ClInclude Include="rectangleColoursTexture.h" />
     <ClInclude Include="triangleLeft.h" />
     <ClInclude Include="triangleRight.h" />
     <ClInclude Include="twoTriangles.h" />
