@@ -71,9 +71,15 @@ int main() {
 			glm::mat4 trans = glm::mat4(1.0f);
 			trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
 			trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-
 			shaderProgram.setMat4("transform", trans);
 
+			rectangle.draw();
+
+			glm::mat4 trans2 = glm::mat4(1.0f);
+			trans2 = glm::translate(trans2, glm::vec3(-0.5f, 0.5f, 0.0f));
+			trans2 = glm::scale(trans2, glm::vec3((sin((float)glfwGetTime()) + 1.0f) / 2.0f));
+
+			shaderProgram.setMat4("transform", trans2);
 			rectangle.draw();
 
 			glfwSwapBuffers(window);
