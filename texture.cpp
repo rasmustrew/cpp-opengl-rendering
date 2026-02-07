@@ -6,7 +6,7 @@
 
 #include <string>
 
-GLuint createBasicTexture(const char* filePath, GLuint textureIndex, GLint wrappingMode) {
+GLuint createBasicTexture(const char* filePath, GLuint textureIndex, GLint wrappingMode, GLint filterMode) {
 	GLuint textureID;
 	glGenTextures(1, &textureID);
 
@@ -15,8 +15,8 @@ GLuint createBasicTexture(const char* filePath, GLuint textureIndex, GLint wrapp
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrappingMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrappingMode);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode);
 
 
 	stbi_set_flip_vertically_on_load(true);

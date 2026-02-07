@@ -2,6 +2,7 @@
 #include "rectangleWrappingExperiment.h"
 #include "shader.h"
 #include "texture.h"
+#include "textureZoomingExperiment.h"
 #include "triangle.h"
 #include "triangleColours.h"
 #include "window.h"
@@ -32,15 +33,12 @@ int main() {
 
 		glViewport(0, 0, 800, 600);
 
-		Shader shaderProgram("colorTexture.vert", "twoTextures.frag");
+		Shader shaderProgram("colorTexture.vert", "colorTexture.frag");
 		shaderProgram.use();
 
-		createBasicTexture("resources/container.jpg", 0, GL_CLAMP_TO_EDGE);
-		createBasicTexture("resources/awesomeface.png", 1);
-		shaderProgram.setInt("texture1", 0);
-		shaderProgram.setInt("texture2", 1);
+		createBasicTexture("resources/awesomeface.png", 0, GL_REPEAT, GL_NEAREST);
 
-		RectangleWrappingExperiment rectangle{};
+		TextureZoomingExperiment rectangle{};
 		rectangle.setup();
 
 

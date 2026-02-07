@@ -112,5 +112,8 @@
     <ClInclude Include="rectangleWrappingExperiment.h">
       <Filter>Header Files\GpuDataLayer</Filter>
     </ClInclude>
+    <ClInclude Include="textureZoomingExperiment.h">
+      <Filter>Header Files\GpuDataLayer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
