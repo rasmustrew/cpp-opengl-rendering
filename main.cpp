@@ -15,14 +15,27 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
+struct camera {
+	glm::vec3 position;
+	glm::vec3 front;
+	glm::vec3 up;
+};
 
 
 
 
-
-void processInput(GLFWwindow* window) {
+void processInput(GLFWwindow* window, camera& cam) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	const float cameraSpeed = 0.05f; // adjust accordingly
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		cam.position += cameraSpeed * cam.front;
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		cam.position -= cameraSpeed * cam.front;
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		cam.position -= glm::normalize(glm::cross(cam.front, cam.up)) * cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		cam.position += glm::normalize(glm::cross(cam.front, cam.up)) * cameraSpeed;
 }
 
 int main() {
@@ -49,9 +62,13 @@ int main() {
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, glm::radians(-65.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-		glm::mat4 view = glm::mat4(1.0f);
-		// note that we're translating the scene in the reverse direction of where we want to move
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		camera cam;
+		cam.position = glm::vec3(0.0f, 0.0f, 3.0f);
+		cam.front = glm::vec3(0.0f, 0.0f, -1.0f);
+		cam.up = glm::vec3(0.0f, 1.0f, 0.0f);
+
+		glm::mat4 view;
+		view = glm::lookAt(cam.position, cam.position + cam.front, cam.up);
 
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
@@ -83,7 +100,7 @@ int main() {
 
 		while (!glfwWindowShouldClose(window)) {
 
-			processInput(window);
+			processInput(window, cam);
 
 			shaderProgram.use();
 
@@ -102,6 +119,9 @@ int main() {
 				box.draw();
 			}
 
+
+			view = glm::lookAt(cam.position, cam.position + cam.front, cam.up);
+			shaderProgram.setMat4("view", view);
 
 
 
