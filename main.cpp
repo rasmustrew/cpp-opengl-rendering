@@ -62,7 +62,7 @@ int main() {
 
 
 
-		Shader objectShader("mvpWithNormal.vert", "ambientDiffuseSpecular.frag");
+		Shader objectShader("mvpNormalView.vert", "phongView.frag");
 		objectShader.use();
 		objectShader.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
 		objectShader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -121,11 +121,11 @@ int main() {
 			light.use();
 
 			float lightTranslation = 1.0f + sin(getTime()) * 20.0f;
-			std::cout << "Light translation: " << lightTranslation << std::endl;
 			glm::vec3 lightXTranslation = glm::vec3(lightTranslation, 0.0f, 0.0f);
 			glm::mat4 lightModel = lightModelBase;
 			lightModel = glm::translate(lightModel, lightXTranslation);
-			lightPos = glm::vec3(lightModel[3]);
+			glm::mat4 lightView = cam.GetViewMatrix() * lightModel;
+			lightPos = glm::vec3(lightView[3]);
 
 			lightSourceShader.setMat4("model", lightModel);
 
@@ -134,7 +134,7 @@ int main() {
 			objectShader.use();
 			objectShader.setMat4("view", mvp.view);
 			objectShader.setMat4("projection", mvp.projection);
-			objectShader.setVec3("viewPos", cam.Position);
+			//objectShader.setVec3("viewPos", cam.Position);
 			objectShader.setVec3("lightPos", lightPos);
 
 			box.use();
@@ -148,7 +148,7 @@ int main() {
 				}
 				mvp.model = glm::rotate(mvp.model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 				objectShader.setMat4("model", mvp.model);
-				glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(mvp.model)));
+				glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(mvp.view * mvp.model)));
 				objectShader.setMat3("normalMatrix", normalMatrix);
 				box.draw();
 			}

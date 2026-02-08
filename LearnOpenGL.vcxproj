@@ -163,7 +163,9 @@
     <None Include=".gitignore" />
     <None Include="ambient.frag" />
     <None Include="ambientDiffuse.frag" />
-    <None Include="ambientDiffuseSpecular.frag" />
+    <None Include="mvpNormalView.vert" />
+    <None Include="phongView.frag" />
+    <None Include="phongWorld.frag" />
     <None Include="colorInput.frag" />
     <None Include="colorInput.vert" />
     <None Include="colorInputUpsideDown.vert" />
