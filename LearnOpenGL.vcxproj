@@ -183,6 +183,8 @@
   <ItemGroup>
     <ClInclude Include="box3D.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="cameraGlide.h" />
+    <ClInclude Include="cameraFps.h" />
     <ClInclude Include="iGpuDataLayer.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="rectangleTexture.h" />

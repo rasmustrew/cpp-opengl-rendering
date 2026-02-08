@@ -1,5 +1,6 @@
 #include "box3D.h"
-#include "camera.h"
+#include "cameraFps.h"
+#include "cameraGlide.h"
 #include "input.h"
 #include "shader.h"
 #include "texture.h"
@@ -35,7 +36,7 @@ float getTime() {
 int main() {
 	try {
 
-		Camera cam{};
+		CameraFps cam{};
 		mouseState initialMouseState{ };
 		windowCallbackData callbackData{ cam, initialMouseState };
 		GLFWwindow* window = setupWindow();
