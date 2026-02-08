@@ -163,6 +163,7 @@
     <None Include=".gitignore" />
     <None Include="ambient.frag" />
     <None Include="ambientDiffuse.frag" />
+    <None Include="mvpGouraud.vert" />
     <None Include="mvpNormalView.vert" />
     <None Include="phongView.frag" />
     <None Include="phongWorld.frag" />
