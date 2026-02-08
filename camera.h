@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
 constexpr float NEAR_PLANE = 0.1F;
 constexpr float FAR_PLANE = 100.0F;
@@ -23,6 +24,26 @@ const float PITCH = 0.0f;
 const float SPEED = 2.5f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
+
+inline glm::mat4 lookAt(glm::vec3 position, glm::vec3 target, glm::vec3 up) {
+
+	glm::vec3 direction = glm::normalize(position - target);
+	glm::vec3 right = glm::normalize(glm::cross(up, direction));
+
+	glm::vec4 right4 = glm::vec4(right, 0.0f);
+	glm::vec4 up4 = glm::vec4(up, 0.0f);
+	glm::vec4 direction4 = glm::vec4(direction, 0.0f);
+
+	glm::vec4 base = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+	glm::mat4 rudBase{ right4, up4, direction4, base };
+	glm::mat4 rud = glm::transpose(rudBase);
+
+	glm::mat4 translation = glm::mat4(1.0f);
+	translation[3] = glm::vec4(-position, 1.0f);
+
+	return rud * translation;
+}
 
 
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
@@ -60,8 +81,8 @@ public:
 	}
 
 	// returns the view matrix calculated using Euler Angles and the LookAt Matrix
-	glm::mat4 GetViewMatrix() {
-		return glm::lookAt(Position, Position + Front, Up);
+	glm::mat4 GetViewMatrix() const {
+		return lookAt(Position, Position + Front, Up);
 	}
 
 	virtual ~Camera() = default;

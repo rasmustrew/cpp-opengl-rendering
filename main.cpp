@@ -22,7 +22,7 @@ mvpMatrices createMvpMatrices(const Camera& cam) {
 	mvpMatrices matrices;
 	matrices.model = glm::mat4(1.0f);
 	matrices.model = glm::mat4(1.0F);
-	matrices.view = glm::lookAt(cam.Position, cam.Position + cam.Front, cam.Up);
+	matrices.view = cam.GetViewMatrix();
 	matrices.projection = glm::perspective(glm::radians(cam.Zoom), WINDOW_ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
 	return matrices;
 }
@@ -112,7 +112,7 @@ int main() {
 			}
 
 
-			mvp.view = glm::lookAt(cam.Position, cam.Position + cam.Front, cam.Up);
+			mvp.view = cam.GetViewMatrix();
 			mvp.projection = glm::perspective(glm::radians(cam.Zoom), WINDOW_ASPECT_RATIO, 0.1f, 100.0f);
 			shaderProgram.setMat4("view", mvp.view);
 			shaderProgram.setMat4("projection", mvp.projection);
