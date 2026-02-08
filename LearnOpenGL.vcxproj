@@ -74,13 +74,15 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <ClangTidyExtraArgs>-Wno-error=unused-command-line-argument</ClangTidyExtraArgs>
-    <ClangTidyChecks>cppcoreguidelines-*, modernize-*, readability-*, bugprone-*</ClangTidyChecks>
+    <ClangTidyChecks>
+    </ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <ClangTidyExtraArgs>-Wno-error=unused-command-line-argument</ClangTidyExtraArgs>
-    <ClangTidyChecks>cppcoreguidelines-*, modernize-*, readability-*, bugprone-*</ClangTidyChecks>
+    <ClangTidyChecks>
+    </ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnableManifest>true</VcpkgEnableManifest>

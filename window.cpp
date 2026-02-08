@@ -21,7 +21,7 @@ auto setupWindow() -> GLFWwindow* {
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "LearnOpenGL", NULL, NULL);
 	if (window == NULL) {
 		throw CreateWindowError("Failed to create GLFW window");
 

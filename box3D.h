@@ -1,6 +1,4 @@
 #pragma once
-#pragma once
-#pragma once
 #include "iGpuDataLayer.h"
 
 class Box3D : public IGpuDataLayer {
@@ -50,7 +48,7 @@ class Box3D : public IGpuDataLayer {
 	};
 
 
-	GLuint VAO;
+	GLuint VAO{};
 
 
 public:

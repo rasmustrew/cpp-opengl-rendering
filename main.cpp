@@ -1,14 +1,8 @@
 #include "box3D.h"
 #include "camera.h"
 #include "input.h"
-#include "rectangleColoursTexture.h"
-#include "rectangleTexture.h"
-#include "rectangleWrappingExperiment.h"
 #include "shader.h"
 #include "texture.h"
-#include "textureZoomingExperiment.h"
-#include "triangle.h"
-#include "triangleColours.h"
 #include "window.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -26,9 +20,9 @@ struct mvpMatrices {
 mvpMatrices createMvpMatrices(const Camera& cam) {
 	mvpMatrices matrices;
 	matrices.model = glm::mat4(1.0f);
-	matrices.model = glm::rotate(matrices.model, glm::radians(-65.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	matrices.model = glm::mat4(1.0F);
 	matrices.view = glm::lookAt(cam.Position, cam.Position + cam.Front, cam.Up);
-	matrices.projection = glm::perspective(glm::radians(cam.Zoom), 800.0f / 600.0f, 0.1f, 100.0f);
+	matrices.projection = glm::perspective(glm::radians(cam.Zoom), WINDOW_ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
 	return matrices;
 }
 
@@ -42,7 +36,7 @@ int main() {
 	try {
 
 		Camera cam{};
-		mouseState initialMouseState{ 400.0f, 300.0f };
+		mouseState initialMouseState{ };
 		windowCallbackData callbackData{ cam, initialMouseState };
 		GLFWwindow* window = setupWindow();
 		setupInput(window, callbackData);
@@ -51,7 +45,7 @@ int main() {
 			std::cout << "Failed to initialize GLAD" << std::endl;
 			return -1;
 		}
-		glViewport(0, 0, 800, 600);
+		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 
 		Shader shaderProgram("mvpTransform.vert", "twoTextures.frag");
@@ -118,7 +112,7 @@ int main() {
 
 
 			mvp.view = glm::lookAt(cam.Position, cam.Position + cam.Front, cam.Up);
-			mvp.projection = glm::perspective(glm::radians(cam.Zoom), 800.0f / 600.0f, 0.1f, 100.0f);
+			mvp.projection = glm::perspective(glm::radians(cam.Zoom), WINDOW_ASPECT_RATIO, 0.1f, 100.0f);
 			shaderProgram.setMat4("view", mvp.view);
 			shaderProgram.setMat4("projection", mvp.projection);
 
@@ -133,7 +127,8 @@ int main() {
 	}
 	catch (const std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;
-		glfwTerminate();
-		return 0;
 	}
+
+	glfwTerminate();
+	return 0;
 }
