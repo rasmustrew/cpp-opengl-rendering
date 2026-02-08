@@ -1,6 +1,6 @@
 #include "box3D.h"
 #include "camera.h"
-#include "mouse.h"
+#include "input.h"
 #include "rectangleColoursTexture.h"
 #include "rectangleTexture.h"
 #include "rectangleWrappingExperiment.h"
@@ -23,12 +23,12 @@ struct mvpMatrices {
 	glm::mat4 projection;
 };
 
-mvpMatrices createMvpMatrices(const camera& cam) {
+mvpMatrices createMvpMatrices(const Camera& cam) {
 	mvpMatrices matrices;
 	matrices.model = glm::mat4(1.0f);
 	matrices.model = glm::rotate(matrices.model, glm::radians(-65.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	matrices.view = glm::lookAt(cam.position, cam.position + cam.front, cam.up);
-	matrices.projection = glm::perspective(glm::radians(cam.fov), 800.0f / 600.0f, 0.1f, 100.0f);
+	matrices.view = glm::lookAt(cam.Position, cam.Position + cam.Front, cam.Up);
+	matrices.projection = glm::perspective(glm::radians(cam.Zoom), 800.0f / 600.0f, 0.1f, 100.0f);
 	return matrices;
 }
 
@@ -36,25 +36,13 @@ float getTime() {
 	return static_cast<float>(glfwGetTime());
 }
 
-void processInput(GLFWwindow* window, camera& cam, float deltaTime) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-	const float cameraSpeed = 2.5f * deltaTime;
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		cam.position += cameraSpeed * cam.front;
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		cam.position -= cameraSpeed * cam.front;
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		cam.position -= glm::normalize(glm::cross(cam.front, cam.up)) * cameraSpeed;
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		cam.position += glm::normalize(glm::cross(cam.front, cam.up)) * cameraSpeed;
-}
+
 
 int main() {
 	try {
 
-		camera cam = createCamera();
-		mouseState initialMouseState{ 400.0f, 300.0f, -90.0f, 0.0f };
+		Camera cam{};
+		mouseState initialMouseState{ 400.0f, 300.0f };
 		windowCallbackData callbackData{ cam, initialMouseState };
 		GLFWwindow* window = setupWindow();
 		setupInput(window, callbackData);
@@ -109,7 +97,7 @@ int main() {
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			processInput(window, cam, deltaTime);
+			processKeyboardInput(window, cam, deltaTime);
 
 			shaderProgram.use();
 
@@ -129,8 +117,8 @@ int main() {
 			}
 
 
-			mvp.view = glm::lookAt(cam.position, cam.position + cam.front, cam.up);
-			mvp.projection = glm::perspective(glm::radians(cam.fov), 800.0f / 600.0f, 0.1f, 100.0f);
+			mvp.view = glm::lookAt(cam.Position, cam.Position + cam.Front, cam.Up);
+			mvp.projection = glm::perspective(glm::radians(cam.Zoom), 800.0f / 600.0f, 0.1f, 100.0f);
 			shaderProgram.setMat4("view", mvp.view);
 			shaderProgram.setMat4("projection", mvp.projection);
 
