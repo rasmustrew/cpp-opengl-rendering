@@ -1,7 +1,7 @@
 #pragma once
 #include "iGpuDataLayer.h"
 
-class Box3D : public IGpuDataLayer {
+class BoxTextured : public IGpuDataLayer {
 
 	float vertices[5 * 36] = {
 	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -64,8 +64,6 @@ public:
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);

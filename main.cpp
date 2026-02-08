@@ -1,7 +1,8 @@
-#include "box3D.h"
+#include "boxNormal.h"
 #include "cameraFps.h"
 #include "cameraGlide.h"
 #include "input.h"
+#include "lightSourceCube.h"
 #include "shader.h"
 #include "texture.h"
 #include "window.h"
@@ -49,21 +50,35 @@ int main() {
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 
-		Shader shaderProgram("mvpTransform.vert", "twoTextures.frag");
-		shaderProgram.use();
+		mvpMatrices mvp = createMvpMatrices(cam);
+
+
+		Shader lightSourceShader("mvpWithTexture.vert", "lightSource.frag");
+		lightSourceShader.use();
+		glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+		glm::mat4 model = model = glm::mat4(1.0f);
+		model = glm::translate(model, lightPos);
+		model = glm::scale(model, glm::vec3(0.2f));
+		lightSourceShader.setMat4("model", model);
+		//lightSourceShader.setVec3("lightPos", lightPos);
+
+
+		Shader objectShader("mvpWithNormal.vert", "ambientDiffuseSpecular.frag");
+		objectShader.use();
+		objectShader.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+		objectShader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+		objectShader.setVec3("lightPos", lightPos);
 
 		createBasicTexture("resources/container.jpg", 0);
 		createBasicTexture("resources/awesomeface.png", 1);
-		shaderProgram.setInt("texture1", 0);
-		shaderProgram.setInt("texture2", 1);
+		objectShader.setInt("texture1", 0);
+		objectShader.setInt("texture2", 1);
 
-		mvpMatrices mvp = createMvpMatrices(cam);
-		shaderProgram.setMat4("model", mvp.model);
-		shaderProgram.setMat4("view", mvp.view);
-		shaderProgram.setMat4("projection", mvp.projection);
 
-		Box3D box{};
+		BoxNormal box{};
 		box.setup();
+		LightSourceCube light{};
+		light.setup();
 
 		glEnable(GL_DEPTH_TEST);
 
@@ -88,16 +103,32 @@ int main() {
 
 		while (!glfwWindowShouldClose(window)) {
 
+			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
 			float currentFrame = getTime();
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
 			processKeyboardInput(window, cam, deltaTime);
 
-			shaderProgram.use();
+			mvp.view = cam.GetViewMatrix();
+			mvp.projection = glm::perspective(glm::radians(cam.Zoom), WINDOW_ASPECT_RATIO, 0.1f, 100.0f);
 
-			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			lightSourceShader.use();
+			lightSourceShader.setMat4("view", mvp.view);
+			lightSourceShader.setMat4("projection", mvp.projection);
+			light.use();
+			light.draw();
+
+			objectShader.use();
+			objectShader.setMat4("view", mvp.view);
+			objectShader.setMat4("projection", mvp.projection);
+			objectShader.setVec3("viewPos", cam.Position);
+
+			box.use();
 
 			for (unsigned int i = 0; i < 10; i++) {
 				mvp.model = glm::mat4(1.0f);
@@ -107,17 +138,15 @@ int main() {
 					angle = getTime() * 25.0f;
 				}
 				mvp.model = glm::rotate(mvp.model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-				shaderProgram.setMat4("model", mvp.model);
+				objectShader.setMat4("model", mvp.model);
+				glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(mvp.model)));
+				objectShader.setMat3("normalMatrix", normalMatrix);
 				box.draw();
 			}
 
 
-			mvp.view = cam.GetViewMatrix();
-			mvp.projection = glm::perspective(glm::radians(cam.Zoom), WINDOW_ASPECT_RATIO, 0.1f, 100.0f);
-			shaderProgram.setMat4("view", mvp.view);
-			shaderProgram.setMat4("projection", mvp.projection);
 
-			box.draw();
+
 
 
 			glfwSwapBuffers(window);

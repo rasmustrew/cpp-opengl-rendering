@@ -161,6 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="ambient.frag" />
+    <None Include="ambientDiffuse.frag" />
+    <None Include="ambientDiffuseSpecular.frag" />
     <None Include="colorInput.frag" />
     <None Include="colorInput.vert" />
     <None Include="colorInputUpsideDown.vert" />
@@ -168,8 +171,11 @@
     <None Include="colorInputMoveRight.vert" />
     <None Include="colorTexture.frag" />
     <None Include="colorTexture.vert" />
+    <None Include="lightSource.frag" />
+    <None Include="litNaive.frag" />
     <None Include="matrixTransform.vert" />
-    <None Include="mvpTransform.vert" />
+    <None Include="mvpWithNormal.vert" />
+    <None Include="mvpWithTexture.vert" />
     <None Include="positionInput.frag" />
     <None Include="positionOut.vert" />
     <None Include="reverseSmiley.frag" />
@@ -181,12 +187,14 @@
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="box3D.h" />
+    <ClInclude Include="boxNormal.h" />
+    <ClInclude Include="boxTextured.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cameraGlide.h" />
     <ClInclude Include="cameraFps.h" />
     <ClInclude Include="iGpuDataLayer.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="lightSourceCube.h" />
     <ClInclude Include="rectangleTexture.h" />
     <ClInclude Include="rectangleWrappingExperiment.h" />
     <ClInclude Include="shader.h" />
