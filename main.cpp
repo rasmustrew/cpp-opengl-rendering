@@ -55,19 +55,17 @@ int main() {
 
 		Shader lightSourceShader("mvpWithTexture.vert", "lightSource.frag");
 		lightSourceShader.use();
-		glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-		glm::mat4 model = model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPos);
-		model = glm::scale(model, glm::vec3(0.2f));
-		lightSourceShader.setMat4("model", model);
-		//lightSourceShader.setVec3("lightPos", lightPos);
+		glm::vec3 lightPos(-1.2f, 1.0f, 2.0f);
+		glm::mat4 lightModelBase = glm::mat4(1.0f);
+		lightModelBase = glm::translate(lightModelBase, lightPos);
+		lightModelBase = glm::scale(lightModelBase, glm::vec3(0.2f));
+
 
 
 		Shader objectShader("mvpWithNormal.vert", "ambientDiffuseSpecular.frag");
 		objectShader.use();
 		objectShader.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
 		objectShader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-		objectShader.setVec3("lightPos", lightPos);
 
 		createBasicTexture("resources/container.jpg", 0);
 		createBasicTexture("resources/awesomeface.png", 1);
@@ -121,12 +119,23 @@ int main() {
 			lightSourceShader.setMat4("view", mvp.view);
 			lightSourceShader.setMat4("projection", mvp.projection);
 			light.use();
+
+			float lightTranslation = 1.0f + sin(getTime()) * 20.0f;
+			std::cout << "Light translation: " << lightTranslation << std::endl;
+			glm::vec3 lightXTranslation = glm::vec3(lightTranslation, 0.0f, 0.0f);
+			glm::mat4 lightModel = lightModelBase;
+			lightModel = glm::translate(lightModel, lightXTranslation);
+			lightPos = glm::vec3(lightModel[3]);
+
+			lightSourceShader.setMat4("model", lightModel);
+
 			light.draw();
 
 			objectShader.use();
 			objectShader.setMat4("view", mvp.view);
 			objectShader.setMat4("projection", mvp.projection);
 			objectShader.setVec3("viewPos", cam.Position);
+			objectShader.setVec3("lightPos", lightPos);
 
 			box.use();
 
