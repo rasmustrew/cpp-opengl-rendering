@@ -198,6 +198,7 @@
     <ClInclude Include="cameraFps.h" />
     <ClInclude Include="iGpuDataLayer.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="light.h" />
     <ClInclude Include="lightSourceCube.h" />
     <ClInclude Include="rectangleTexture.h" />
     <ClInclude Include="rectangleWrappingExperiment.h" />
@@ -209,6 +210,7 @@
     <ClInclude Include="triangleLeft.h" />
     <ClInclude Include="triangleRight.h" />
     <ClInclude Include="twoTriangles.h" />
+    <ClInclude Include="util.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

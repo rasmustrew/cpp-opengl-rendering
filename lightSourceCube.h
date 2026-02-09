@@ -1,5 +1,6 @@
 #pragma once
 #include "iGpuDataLayer.h"
+#include "light.h"
 
 class LightSourceCube : public IGpuDataLayer {
 
@@ -48,11 +49,7 @@ class LightSourceCube : public IGpuDataLayer {
 	};
 
 
-	GLuint VAO{};
-
-
 public:
-
 
 	void setup() override {
 

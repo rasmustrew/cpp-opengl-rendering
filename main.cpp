@@ -2,9 +2,11 @@
 #include "cameraFps.h"
 #include "cameraGlide.h"
 #include "input.h"
+#include "light.h"
 #include "lightSourceCube.h"
 #include "shader.h"
 #include "texture.h"
+#include "util.h"
 #include "window.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -26,66 +28,31 @@ glm::vec3 cubePositions[] = {
 			glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
-struct mvpMatrices {
-	glm::mat4 model;
-	glm::mat4 view;
-	glm::mat4 projection;
-};
 
-mvpMatrices createMvpMatrices(const Camera& cam) {
-	mvpMatrices matrices;
-	matrices.model = glm::mat4(1.0f);
-	matrices.model = glm::mat4(1.0F);
-	matrices.view = cam.GetViewMatrix();
-	matrices.projection = glm::perspective(glm::radians(cam.Zoom), WINDOW_ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
-	return matrices;
-}
 
-float getTime() {
-	return static_cast<float>(glfwGetTime());
-}
-
-void setupGlad() {
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		throw std::runtime_error("Failed to initialize GLAD");
-	}
-}
-
-void drawLightSource(Shader& lightSourceShader, mvpMatrices& mvp, LightSourceCube& light, const glm::mat4& lightModelBase, glm::vec3& lightPos) {
+void drawLightSource(Shader& lightSourceShader, mvpMatrices& mvp, LightSourceCube& lightCube, light light) {
 	lightSourceShader.use();
 	lightSourceShader.setMat4("view", mvp.view);
 	lightSourceShader.setMat4("projection", mvp.projection);
-	light.use();
+	lightCube.use();
 
-	float lightTranslation = 1.0f + sin(getTime()) * 20.0f;
-	glm::vec3 lightXTranslation = glm::vec3(lightTranslation, 0.0f, 0.0f);
-	glm::mat4 lightModel = lightModelBase;
-	lightModel = glm::translate(lightModel, lightXTranslation);
-	lightPos = glm::vec3(lightModel[3]);
 
-	lightSourceShader.setMat4("model", lightModel);
 
-	light.draw();
+	lightSourceShader.setMat4("model", light.model);
+
+	lightCube.draw();
 }
 
-void DrawBoxes(Shader& objectShader, mvpMatrices& mvp, CameraFps& cam, glm::vec3& lightPos, BoxNormal& box) {
+void DrawBoxes(Shader& objectShader, mvpMatrices& mvp, CameraFps& cam, BoxNormal& box, light& light) {
 	objectShader.use();
 	objectShader.setMat4("view", mvp.view);
 	objectShader.setMat4("projection", mvp.projection);
 	objectShader.setVec3("viewPos", cam.Position);
-	objectShader.setVec3("light.position", lightPos);
 
-
-	glm::vec3 lightColor;
-	lightColor.x = sin(getTime() * 2.0f);
-	lightColor.y = sin(getTime() * 0.7f);
-	lightColor.z = sin(getTime() * 1.3f);
-
-	glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
-	glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
-
-	objectShader.setVec3("light.ambient", ambientColor);
-	objectShader.setVec3("light.diffuse", diffuseColor);
+	objectShader.setVec3("light.position", glm::vec3(light.model[3]));
+	objectShader.setVec3("light.ambient", light.ambient);
+	objectShader.setVec3("light.diffuse", light.diffuse);
+	objectShader.setVec3("light.specular", light.specular);
 
 
 	box.use();
@@ -103,10 +70,6 @@ void DrawBoxes(Shader& objectShader, mvpMatrices& mvp, CameraFps& cam, glm::vec3
 		objectShader.setMat3("normalMatrix", normalMatrix);
 		box.draw();
 	}
-
-
-
-
 }
 
 int main() {
@@ -124,14 +87,10 @@ int main() {
 
 
 		mvpMatrices mvp = createMvpMatrices(cam);
-
+		light light = getDefaultLight();
 
 		Shader lightSourceShader("mvpWithTexture.vert", "lightSource.frag");
-		lightSourceShader.use();
-		glm::vec3 lightPos(-1.2f, 1.0f, 2.0f);
-		glm::mat4 lightModelBase = glm::mat4(1.0f);
-		lightModelBase = glm::translate(lightModelBase, lightPos);
-		lightModelBase = glm::scale(lightModelBase, glm::vec3(0.2f));
+
 
 
 
@@ -139,12 +98,8 @@ int main() {
 		objectShader.use();
 		objectShader.setVec3("material.ambient", glm::vec3(1.0f, 0.5f, 0.31f));
 		objectShader.setVec3("material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
-		objectShader.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-		objectShader.setFloat("material.shininess", 32.0f);
-
-		objectShader.setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-		objectShader.setVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-		objectShader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		objectShader.setVec3("material.specular", glm::vec3(0.0f, 1.0f, 0.0f));
+		objectShader.setFloat("material.shininess", 256.0f);
 
 		createBasicTexture("resources/container.jpg", 0);
 		createBasicTexture("resources/awesomeface.png", 1);
@@ -154,12 +109,10 @@ int main() {
 
 		BoxNormal box{};
 		box.setup();
-		LightSourceCube light{};
-		light.setup();
+		LightSourceCube lightCube{ };
+		lightCube.setup();
 
 		glEnable(GL_DEPTH_TEST);
-
-
 
 
 		// -------------- Render loop --------------
@@ -178,11 +131,14 @@ int main() {
 
 			processKeyboardInput(window, cam, deltaTime);
 
+			updateLight(light);
+
+
 			mvp.view = cam.GetViewMatrix();
 			mvp.projection = glm::perspective(glm::radians(cam.Zoom), WINDOW_ASPECT_RATIO, 0.1f, 100.0f);
 
-			drawLightSource(lightSourceShader, mvp, light, lightModelBase, lightPos);
-			DrawBoxes(objectShader, mvp, cam, lightPos, box);
+			drawLightSource(lightSourceShader, mvp, lightCube, light);
+			DrawBoxes(objectShader, mvp, cam, box, light);
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
