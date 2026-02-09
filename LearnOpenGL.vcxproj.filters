@@ -19,6 +19,12 @@
     <Filter Include="Header Files\GpuDataLayer">
       <UniqueIdentifier>{a7be14dc-0857-45a1-912d-279a26ba10a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader Files\Fragment">
+      <UniqueIdentifier>{56307fe8-e7d0-4012-8062-a666d8e942ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader Files\Vertex">
+      <UniqueIdentifier>{930c34d9-0ee3-4067-ac30-0e3e1d740369}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,54 +48,86 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
-    <None Include="shader.frag">
-      <Filter>Shader Files</Filter>
-    </None>
-    <None Include="shader.vert">
-      <Filter>Shader Files</Filter>
-    </None>
-    <None Include="colorUniform.frag">
-      <Filter>Shader Files</Filter>
-    </None>
-    <None Include="colorInput.vert">
-      <Filter>Shader Files</Filter>
-    </None>
-    <None Include="colorInput.frag">
-      <Filter>Shader Files</Filter>
-    </None>
-    <None Include="colorInputUpsideDown.vert">
-      <Filter>Shader Files</Filter>
-    </None>
-    <None Include="colorInputMoveRight.vert">
-      <Filter>Shader Files</Filter>
-    </None>
     <None Include="vcpkg-configuration.json" />
-    <None Include="positionOut.vert">
-      <Filter>Shader Files</Filter>
-    </None>
-    <None Include="positionInput.frag">
-      <Filter>Shader Files</Filter>
-    </None>
     <None Include=".gitignore" />
-    <None Include="colorTexture.vert">
-      <Filter>Shader Files</Filter>
+    <None Include="colorInput.frag">
+      <Filter>Shader Files\Fragment</Filter>
     </None>
     <None Include="colorTexture.frag">
-      <Filter>Shader Files</Filter>
+      <Filter>Shader Files\Fragment</Filter>
     </None>
-    <None Include="twoTextures.frag">
-      <Filter>Shader Files</Filter>
+    <None Include="positionInput.frag">
+      <Filter>Shader Files\Fragment</Filter>
     </None>
     <None Include="reverseSmiley.frag">
-      <Filter>Shader Files</Filter>
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="shader.frag">
+      <Filter>Shader Files\Fragment</Filter>
     </None>
     <None Include="texturesVariableMix.frag">
-      <Filter>Shader Files</Filter>
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="twoTextures.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="ambient.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="ambientDiffuse.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="lightSource.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="litNaive.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="phongView.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="phongWorld.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="colorInput.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="colorInputMoveRight.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="colorInputUpsideDown.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="colorTexture.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="colorUniform.frag">
+      <Filter>Shader Files\Vertex</Filter>
     </None>
     <None Include="matrixTransform.vert">
-      <Filter>Shader Files</Filter>
+      <Filter>Shader Files\Vertex</Filter>
     </None>
-    <None Include="mvpTransform.vert" />
+    <None Include="positionOut.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="shader.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="mvpGouraud.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="mvpNormalView.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="mvpWithNormal.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="mvpWithTexture.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="singlematerial.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -128,13 +166,25 @@
     <ClInclude Include="rectangleTexture.h">
       <Filter>Header Files\GpuDataLayer</Filter>
     </ClInclude>
-    <ClInclude Include="box3D.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
     <ClInclude Include="input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="boxNormal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="boxTextured.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cameraGlide.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cameraFps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lightSourceCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
