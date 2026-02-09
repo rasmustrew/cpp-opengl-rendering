@@ -19,10 +19,10 @@ inline void updateLight(light& l) {
 	lightColor.y = sin(getTime() * 0.7f);
 	lightColor.z = sin(getTime() * 1.3f);
 
-	/*glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+	glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
 	glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
 	l.diffuse = diffuseColor;
-	l.ambient = ambientColor;*/
+	l.ambient = ambientColor;
 
 	float lightX = 1.0f + sin(getTime()) * 10.0f;
 	l.model[3][0] = lightX;

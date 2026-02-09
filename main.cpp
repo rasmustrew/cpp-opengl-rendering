@@ -30,16 +30,13 @@ glm::vec3 cubePositions[] = {
 
 
 
-void drawLightSource(Shader& lightSourceShader, mvpMatrices& mvp, LightSourceCube& lightCube, light light) {
+void drawLightSource(Shader& lightSourceShader, mvpMatrices& mvp, LightSourceCube& lightCube, light& light) {
 	lightSourceShader.use();
 	lightSourceShader.setMat4("view", mvp.view);
 	lightSourceShader.setMat4("projection", mvp.projection);
-	lightCube.use();
-
-
-
 	lightSourceShader.setMat4("model", light.model);
-
+	lightSourceShader.setVec4("ourColor", glm::vec4(light.diffuse, 1.0f));
+	lightCube.use();
 	lightCube.draw();
 }
 
@@ -89,7 +86,7 @@ int main() {
 		mvpMatrices mvp = createMvpMatrices(cam);
 		light light = getDefaultLight();
 
-		Shader lightSourceShader("mvpWithTexture.vert", "lightSource.frag");
+		Shader lightSourceShader("mvpWithTexture.vert", "colorUniform.frag");
 
 
 
