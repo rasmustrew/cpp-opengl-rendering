@@ -200,6 +200,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="lightSourceCube.h" />
+    <ClInclude Include="Object3D.h" />
     <ClInclude Include="rectangleTexture.h" />
     <ClInclude Include="rectangleWrappingExperiment.h" />
     <ClInclude Include="shader.h" />

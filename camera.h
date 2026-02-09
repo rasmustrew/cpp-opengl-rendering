@@ -85,6 +85,10 @@ public:
 		return lookAt(Position, Position + Front, Up);
 	}
 
+	glm::mat4 GetProjectionMatrix(float aspectRatio) const {
+		return glm::perspective(glm::radians(Zoom), aspectRatio, NEAR_PLANE, FAR_PLANE);
+	}
+
 	virtual ~Camera() = default;
 
 	// processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
