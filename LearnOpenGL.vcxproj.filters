@@ -128,6 +128,10 @@
     <None Include="colorUniform.frag">
       <Filter>Shader Files\Fragment</Filter>
     </None>
+    <None Include="materialMaps.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="mvpNormalTexture.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -172,19 +176,10 @@
     <ClInclude Include="camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="boxNormal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="boxTextured.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cameraGlide.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cameraFps.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lightSourceCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="light.h">
@@ -195,6 +190,18 @@
     </ClInclude>
     <ClInclude Include="Object3D.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="boxNormal.h">
+      <Filter>Header Files\GpuDataLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="boxTextured.h">
+      <Filter>Header Files\GpuDataLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="lightSourceCube.h">
+      <Filter>Header Files\GpuDataLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="boxNormalTextured.h">
+      <Filter>Header Files\GpuDataLayer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

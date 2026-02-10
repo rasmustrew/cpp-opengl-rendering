@@ -164,7 +164,9 @@
     <None Include="ambient.frag" />
     <None Include="ambientDiffuse.frag" />
     <None Include="mvpGouraud.vert" />
+    <None Include="mvpNormalTexture.vert" />
     <None Include="mvpNormalView.vert" />
+    <None Include="materialMaps.frag" />
     <None Include="phongView.frag" />
     <None Include="phongWorld.frag" />
     <None Include="colorInput.frag" />
@@ -192,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boxNormal.h" />
+    <ClInclude Include="boxNormalTextured.h" />
     <ClInclude Include="boxTextured.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cameraGlide.h" />

@@ -1,4 +1,5 @@
 #include "boxNormal.h"
+#include "boxNormalTextured.h"
 #include "cameraFps.h"
 #include "cameraGlide.h"
 #include "input.h"
@@ -92,7 +93,7 @@ void drawLightSource(Shader& lightSourceShader, Camera& cam, LightSourceCube& li
 	lightCube.draw();
 }
 
-void drawBoxes(Shader& objectShader, std::array<object3D, 10>& objects, CameraFps& cam, BoxNormal& box, light& light) {
+void drawBoxes(Shader& objectShader, std::array<object3D, 10>& objects, CameraFps& cam, IGpuDataLayer& box, light& light) {
 	objectShader.use();
 	objectShader.setMat4("view", cam.GetViewMatrix());
 	objectShader.setMat4("projection", cam.GetProjectionMatrix(WINDOW_ASPECT_RATIO));
@@ -145,14 +146,14 @@ int main() {
 		Shader lightSourceShader("mvpWithTexture.vert", "colorUniform.frag");
 
 
-		Shader objectShader("mvpWithNormal.vert", "singleMaterial.frag");
+		Shader objectShader("mvpNormalTexture.vert", "materialMaps.frag");
 		objectShader.use();
 
 
-		createBasicTexture("resources/container.jpg", 0);
-		createBasicTexture("resources/awesomeface.png", 1);
-		objectShader.setInt("texture1", 0);
-		objectShader.setInt("texture2", 1);
+		createBasicTexture("resources/container2.png", 0);
+		createBasicTexture("resources/container2_specular.png", 1);
+		objectShader.setInt("material.diffuse", 0);
+		objectShader.setInt("material.specular", 1);
 
 		std::array<object3D, 10> objects{};
 
@@ -169,7 +170,7 @@ int main() {
 		}
 
 
-		BoxNormal box{};
+		BoxNormalTextured box{};
 		box.setup();
 		LightSourceCube lightCube{ };
 		lightCube.setup();
