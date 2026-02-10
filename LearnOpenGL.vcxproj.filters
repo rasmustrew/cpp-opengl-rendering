@@ -132,6 +132,9 @@
       <Filter>Shader Files\Fragment</Filter>
     </None>
     <None Include="mvpNormalTexture.vert" />
+    <None Include="materialMapsEmission.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">

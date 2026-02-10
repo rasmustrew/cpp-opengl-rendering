@@ -120,9 +120,6 @@ void drawBoxes(Shader& objectShader, std::array<object3D, 10>& objects, CameraFp
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(obj.model)));
 		objectShader.setMat3("normalMatrix", normalMatrix);
 
-		objectShader.setVec3("material.ambient", obj.mat.ambient);
-		objectShader.setVec3("material.diffuse", obj.mat.diffuse);
-		objectShader.setVec3("material.specular", obj.mat.specular);
 		objectShader.setFloat("material.shininess", obj.mat.shininess);
 
 		box.draw();
