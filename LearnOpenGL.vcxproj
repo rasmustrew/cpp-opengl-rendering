@@ -163,6 +163,7 @@
     <None Include=".gitignore" />
     <None Include="ambient.frag" />
     <None Include="ambientDiffuse.frag" />
+    <None Include="directionalLight.frag" />
     <None Include="materialMapsEmission.frag" />
     <None Include="mvpGouraud.vert" />
     <None Include="mvpNormalTexture.vert" />
@@ -182,12 +183,14 @@
     <None Include="matrixTransform.vert" />
     <None Include="mvpWithNormal.vert" />
     <None Include="mvpWithTexture.vert" />
+    <None Include="pointLight.frag" />
     <None Include="positionInput.frag" />
     <None Include="positionOut.vert" />
     <None Include="reverseSmiley.frag" />
     <None Include="shader.frag" />
     <None Include="shader.vert" />
     <None Include="singlematerial.frag" />
+    <None Include="spotLight.frag" />
     <None Include="texturesVariableMix.frag" />
     <None Include="twoTextures.frag" />
     <None Include="vcpkg-configuration.json" />

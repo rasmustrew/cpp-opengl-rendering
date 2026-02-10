@@ -61,7 +61,9 @@ void drawBoxes(Shader& objectShader, std::array<object3D, 10>& objects, CameraFp
 	objectShader.setMat4("projection", cam.GetProjectionMatrix(WINDOW_ASPECT_RATIO));
 	objectShader.setVec3("viewPos", cam.Position);
 
-	objectShader.setVec3("light.position", glm::vec3(light.model[3]));
+	//objectShader.setVec3("light.position", glm::vec3(light.model[3]));
+	objectShader.setVec3("light.position", cam.Position);
+	objectShader.setVec3("light.direction", cam.Front);
 	objectShader.setVec3("light.ambient", light.ambient);
 	objectShader.setVec3("light.diffuse", light.diffuse);
 	objectShader.setVec3("light.specular", light.specular);
@@ -105,9 +107,15 @@ int main() {
 		Shader lightSourceShader("mvpWithTexture.vert", "colorUniform.frag");
 
 
-		Shader objectShader("mvpNormalTexture.vert", "materialMaps.frag");
+		Shader objectShader("mvpNormalTexture.vert", "spotLight.frag");
 		objectShader.use();
 
+		/*	objectShader.setFloat("light.constant", 1.0);
+			objectShader.setFloat("light.linear", 0.09f);
+			objectShader.setFloat("light.quadratic", 0.032f);*/
+
+		objectShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+		objectShader.setFloat("light.outerCutOff", glm::cos(glm::radians(20.0f)));
 
 		createBasicTexture("resources/container2.png", 0);
 		createBasicTexture("resources/container2_specular.png", 1);

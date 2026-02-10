@@ -131,10 +131,19 @@
     <None Include="materialMaps.frag">
       <Filter>Shader Files\Fragment</Filter>
     </None>
-    <None Include="mvpNormalTexture.vert" />
     <None Include="materialMapsEmission.frag">
       <Filter>Shader Files\Fragment</Filter>
     </None>
+    <None Include="pointLight.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="directionalLight.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="mvpNormalTexture.vert">
+      <Filter>Shader Files\Vertex</Filter>
+    </None>
+    <None Include="spotLight.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">

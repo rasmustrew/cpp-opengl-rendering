@@ -13,8 +13,8 @@ struct light {
 
 
 
-inline void updateLight(light& l) {
-	glm::vec3 lightColor;
+inline void updateLight(light&) {
+	/*glm::vec3 lightColor;
 	lightColor.x = sin(getTime() * 2.0f);
 	lightColor.y = sin(getTime() * 0.7f);
 	lightColor.z = sin(getTime() * 1.3f);
@@ -25,7 +25,7 @@ inline void updateLight(light& l) {
 	l.ambient = ambientColor;
 
 	float lightX = 1.0f + sin(getTime()) * 10.0f;
-	l.model[3][0] = lightX;
+	l.model[3][0] = lightX;*/
 
 
 }
