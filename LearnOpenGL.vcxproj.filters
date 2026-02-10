@@ -144,6 +144,7 @@
       <Filter>Shader Files\Vertex</Filter>
     </None>
     <None Include="spotLight.frag" />
+    <None Include="multipleLights.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">

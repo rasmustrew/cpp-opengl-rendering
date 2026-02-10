@@ -45,7 +45,7 @@ float cubeShininess[] = {
 	0.078125f * 128 // black rubber
 };
 
-void drawLightSource(Shader& lightSourceShader, Camera& cam, LightSourceCube& lightCube, light& light) {
+void drawLightSource(Shader& lightSourceShader, Camera& cam, LightSourceCube& lightCube, pointLight& light) {
 	lightSourceShader.use();
 	lightSourceShader.setMat4("view", cam.GetViewMatrix());
 	lightSourceShader.setMat4("projection", cam.GetProjectionMatrix(WINDOW_ASPECT_RATIO));
@@ -55,18 +55,17 @@ void drawLightSource(Shader& lightSourceShader, Camera& cam, LightSourceCube& li
 	lightCube.draw();
 }
 
-void drawBoxes(Shader& objectShader, std::array<object3D, 10>& objects, CameraFps& cam, IGpuDataLayer& box, light& light) {
+void drawBoxes(Shader& objectShader, std::array<object3D, 10>& objects, CameraFps& cam, IGpuDataLayer& box, spotLight& spotLight, std::array<pointLight, 4>& lights) {
 	objectShader.use();
 	objectShader.setMat4("view", cam.GetViewMatrix());
 	objectShader.setMat4("projection", cam.GetProjectionMatrix(WINDOW_ASPECT_RATIO));
 	objectShader.setVec3("viewPos", cam.Position);
+	setSpotLightUniforms(objectShader, spotLight, cam);
 
-	//objectShader.setVec3("light.position", glm::vec3(light.model[3]));
-	objectShader.setVec3("light.position", cam.Position);
-	objectShader.setVec3("light.direction", cam.Front);
-	objectShader.setVec3("light.ambient", light.ambient);
-	objectShader.setVec3("light.diffuse", light.diffuse);
-	objectShader.setVec3("light.specular", light.specular);
+	for (size_t i = 0; i < lights.size(); i++) {
+		auto& light = lights[i];
+		setPointLightUniforms(objectShader, light, i);
+	}
 
 
 	box.use();
@@ -103,19 +102,25 @@ int main() {
 
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		light light = getDefaultLight();
+
 		Shader lightSourceShader("mvpWithTexture.vert", "colorUniform.frag");
+		directionalLight directionalLight = getDefaultDirectionalLight();
+		spotLight spotLight = getDefaultSpotLight();
 
 
-		Shader objectShader("mvpNormalTexture.vert", "spotLight.frag");
+		std::array<pointLight, 4> lights{};
+
+		for (size_t i = 0; i < lights.size(); i++) {
+			lights[i] = getDefaultPointLight();
+			lights[i].model = glm::translate(lights[i].model, pointLightPositions[i]);
+			lights[i].model = glm::scale(lights[i].model, glm::vec3(0.2f));
+		}
+
+
+		Shader objectShader("mvpNormalTexture.vert", "multipleLights.frag");
 		objectShader.use();
 
-		/*	objectShader.setFloat("light.constant", 1.0);
-			objectShader.setFloat("light.linear", 0.09f);
-			objectShader.setFloat("light.quadratic", 0.032f);*/
-
-		objectShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
-		objectShader.setFloat("light.outerCutOff", glm::cos(glm::radians(20.0f)));
+		setDirectionalLightUniforms(objectShader, directionalLight);
 
 		createBasicTexture("resources/container2.png", 0);
 		createBasicTexture("resources/container2_specular.png", 1);
@@ -157,12 +162,12 @@ int main() {
 
 			processKeyboardInput(window, cam, deltaTime);
 
-			updateLight(light);
+			for (auto& light : lights) {
+				drawLightSource(lightSourceShader, cam, lightCube, light);
+			}
 
 
-
-			drawLightSource(lightSourceShader, cam, lightCube, light);
-			drawBoxes(objectShader, objects, cam, box, light);
+			drawBoxes(objectShader, objects, cam, box, spotLight, lights);
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
