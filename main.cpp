@@ -31,56 +31,18 @@ glm::vec3 cubePositions[] = {
 			glm::vec3(-1.3f,  1.0f, -1.5f) // black rubber
 };
 
-glm::vec3 cubeAmbient[] = {
-	glm::vec3(0.0215f, 0.1745f, 0.0215f), // emerald
-	glm::vec3(0.135f, 0.2225f, 0.1575f), // jade
-	glm::vec3(0.05375f, 0.05f, 0.06625f), // obsidian
-	glm::vec3(0.25f, 0.20725f, 0.20725f), // pearl
-	glm::vec3(0.1745f, 0.01175f, 0.01175f), // ruby
-	glm::vec3(0.0f, 0.0f, 0.0f), // white plastic
-	glm::vec3(0.0f, 0.1f, 0.06f), // cyan plastic
-	glm::vec3(0.0f, 0.05f, 0.0f), // green rubber
-	glm::vec3(0.05f, 0.0f, 0.0f), // red rubber
-	glm::vec3(0.02f, 0.02f, 0.02f)  // black rubber
-};
-
-glm::vec3 cubeDiffuse[] = {
-	glm::vec3(0.07568f, 0.61424f, 0.07568f), // emerald
-	glm::vec3(0.54f, 0.89f, 0.63f), // jade
-	glm::vec3(0.18275f, 0.17f, 0.22525f), // obsidian
-	glm::vec3(1.0f, 0.829f, 0.829f), // pearl
-	glm::vec3(0.61424f, 0.04136f, 0.04136f), // ruby
-	glm::vec3(0.55f, 0.55f, 0.55f), // white plastic
-	glm::vec3(0.0f, 0.50980392f, 0.50980392f), // cyan plastic
-	glm::vec3(0.4f, 0.5f, 0.4f), // green rubber
-	glm::vec3(0.5f, 0.4f, 0.4f), // red rubber
-	glm::vec3(0.01f, 0.01f, 0.01f)  // black rubber
-};
-
-glm::vec3 cubeSpecular[] = {
-	glm::vec3(0.633f, 0.727811f, 0.633f), // emerald
-	glm::vec3(0.316228f, 0.316228f, 0.316228f), // jade
-	glm::vec3(0.332741f, 0.328634f, 0.346435f), // obsidian
-	glm::vec3(0.296648f, 0.296648f, 0.296648f), // pearl
-	glm::vec3(0.727811f, 0.626959f, 0.626959f), // ruby
-	glm::vec3(0.70f, 0.70f, 0.70f), // white plastic
-	glm::vec3(0.50196078f, 0.50196078f, 0.50196078f), // cyan plastic
-	glm::vec3(0.04f, 0.7f, 0.04f), // green rubber
-	glm::vec3(0.7f, 0.04f, 0.04f), // red rubber
-	glm::vec3(0.4f, 0.4f, 0.4f)  // black rubber
-};
 
 float cubeShininess[] = {
-	0.6f * 128,
-	0.1f * 128,
-	0.3f * 128,
-	0.088f * 128,
-	0.6f * 128,
-	0.25f * 128,
-	0.25f * 128,
-	0.078125f * 128,
-	0.078125f * 128,
-	0.078125f * 128
+	0.6f * 128, // emerald
+	0.1f * 128, // jade
+	0.3f * 128, // obsidian
+	0.088f * 128, // pearl
+	0.6f * 128, // ruby
+	0.25f * 128, // white plastic
+	0.25f * 128, // cyan plastic
+	0.078125f * 128, // green rubber
+	0.078125f * 128, // red rubber
+	0.078125f * 128 // black rubber
 };
 
 void drawLightSource(Shader& lightSourceShader, Camera& cam, LightSourceCube& lightCube, light& light) {
@@ -157,12 +119,8 @@ int main() {
 		for (size_t i = 0; i < objects.size(); i++) {
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, cubePositions[i]);
-			material mat{
-				cubeAmbient[i],
-				cubeDiffuse[i],
-				cubeSpecular[i],
-				cubeShininess[i]
-			};
+			material mat{};
+			mat.shininess = cubeShininess[i];
 			objects[i] = { model, mat };
 		}
 
