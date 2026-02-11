@@ -78,6 +78,7 @@ int main() {
 		lightCube.setup();
 
 		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
 
 
 		// -------------- Render loop --------------
