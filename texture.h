@@ -1,4 +1,4 @@
 #include <glad/glad.h>
+#include <string>
 
-
-GLuint createBasicTexture(const char* filePath, GLuint textureIndex = 0, GLint wrappingMode = GL_REPEAT, GLint filterMode = GL_LINEAR);
+GLuint TextureFromFile(const char* path, const std::string& directory);

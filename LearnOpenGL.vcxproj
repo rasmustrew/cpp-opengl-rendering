@@ -130,6 +130,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -165,6 +166,7 @@
     <None Include="ambientDiffuse.frag" />
     <None Include="directionalLight.frag" />
     <None Include="materialMapsEmission.frag" />
+    <None Include="mesh.frag" />
     <None Include="multipleLights.frag" />
     <None Include="mvpGouraud.vert" />
     <None Include="mvpNormalTexture.vert" />
@@ -208,6 +210,8 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="lightSourceCube.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="model.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="rectangleTexture.h" />
     <ClInclude Include="rectangleWrappingExperiment.h" />

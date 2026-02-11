@@ -1,5 +1,5 @@
 {
   "dependencies": [
-    "glfw3", "stb", "glad", "glm"
+    "glfw3", "stb", "glad", "glm", "assimp"
   ]
 }

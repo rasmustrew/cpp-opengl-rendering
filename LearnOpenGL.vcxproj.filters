@@ -143,8 +143,15 @@
     <None Include="mvpNormalTexture.vert">
       <Filter>Shader Files\Vertex</Filter>
     </None>
-    <None Include="spotLight.frag" />
-    <None Include="multipleLights.frag" />
+    <None Include="spotLight.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="multipleLights.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
+    <None Include="mesh.frag">
+      <Filter>Shader Files\Fragment</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -215,6 +222,12 @@
     </ClInclude>
     <ClInclude Include="boxNormalTextured.h">
       <Filter>Header Files\GpuDataLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

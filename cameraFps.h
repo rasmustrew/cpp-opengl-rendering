@@ -1,6 +1,7 @@
 #pragma once
 
 #include "camera.h"
+#include "window.h"
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -50,6 +51,12 @@ public:
 			Zoom = 1.0f;
 		if (Zoom > 45.0f)
 			Zoom = 45.0f;
+	}
+
+	void SetUniforms(Shader& shader) const {
+		shader.setVec3("viewPos", Position);
+		shader.setMat4("view", GetViewMatrix());
+		shader.setMat4("projection", GetProjectionMatrix(WINDOW_ASPECT_RATIO));
 	}
 };
 
