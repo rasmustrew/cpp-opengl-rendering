@@ -1,0 +1,40 @@
+Checks: >
+  -*,
+  modernize-use-nullptr,
+  modernize-use-override,
+  modernize-use-scoped-enum,
+  modernize-loop-convert,
+  cppcoreguidelines-pro-type-cstyle-cast,
+  readability-braces-around-statements,
+  readability-identifier-naming,
+  performance-unnecessary-copy-initialization,
+  bugprone-unused-return-value,
+  -bugprone-easily-swappable-parameters
+
+HeaderFilterRegex: '.*src.*'
+WarningsAsErrors: 'readability-braces-around-statements,readability-identifier-naming'
+ExtraArgs: ['-Wmissing-declarations']
+
+CheckOptions:
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.MethodCase
+    value: CamelCase
+  - key: readability-identifier-naming.MemberCase
+    value: CamelCase
+  - key: readability-identifier-naming.NamespaceCase
+    value: CamelCase
+  - key: readability-identifier-naming.FunctionCase
+    value: CamelCase
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.ParameterCase
+    value: camelBack
+  - key: readability-identifier-naming.LocalVariableCase
+    value: camelBack

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -71,21 +71,29 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <ClangTidyExtraArgs>-Wno-error=unused-command-line-argument</ClangTidyExtraArgs>
+    <ClangTidyToolExeAdditionalOptions>--quiet</ClangTidyToolExeAdditionalOptions>
     <ClangTidyChecks>
     </ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <ClangTidyExtraArgs>-Wno-error=unused-command-line-argument</ClangTidyExtraArgs>
+    <ClangTidyToolExeAdditionalOptions>--quiet</ClangTidyToolExeAdditionalOptions>
     <ClangTidyChecks>
     </ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgTriplet>x64-windows-static-md</VcpkgTriplet>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <VcpkgTriplet>x64-windows-static-md</VcpkgTriplet>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -125,7 +133,7 @@
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
       <AdditionalOptions>/w44365 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>C:\Users\rt071\CPlusPlus\repos\LearnOpenGL\libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,7 +153,7 @@
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
       <AdditionalOptions>/w44365 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>C:\Users\rt071\CPlusPlus\repos\LearnOpenGL\libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,78 +161,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="input.cpp" />
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="texture.cpp" />
-    <ClCompile Include="triangle.h" />
-    <ClCompile Include="window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include=".clang-tidy" />
     <None Include=".gitignore" />
-    <None Include="ambient.frag" />
-    <None Include="ambientDiffuse.frag" />
-    <None Include="directionalLight.frag" />
-    <None Include="materialMapsEmission.frag" />
-    <None Include="mesh.frag" />
-    <None Include="multipleLights.frag" />
-    <None Include="mvpGouraud.vert" />
-    <None Include="mvpNormalTexture.vert" />
-    <None Include="mvpNormalView.vert" />
-    <None Include="materialMaps.frag" />
-    <None Include="phongView.frag" />
-    <None Include="phongWorld.frag" />
-    <None Include="colorInput.frag" />
-    <None Include="colorInput.vert" />
-    <None Include="colorInputUpsideDown.vert" />
-    <None Include="colorUniform.frag" />
-    <None Include="colorInputMoveRight.vert" />
-    <None Include="colorTexture.frag" />
-    <None Include="colorTexture.vert" />
-    <None Include="lightSource.frag" />
-    <None Include="litNaive.frag" />
-    <None Include="matrixTransform.vert" />
-    <None Include="mvpWithNormal.vert" />
-    <None Include="mvpWithTexture.vert" />
-    <None Include="pointLight.frag" />
-    <None Include="positionInput.frag" />
-    <None Include="positionOut.vert" />
-    <None Include="reverseSmiley.frag" />
-    <None Include="shader.frag" />
-    <None Include="shader.vert" />
-    <None Include="singlematerial.frag" />
-    <None Include="spotLight.frag" />
-    <None Include="texturesVariableMix.frag" />
-    <None Include="twoTextures.frag" />
-    <None Include="vcpkg-configuration.json" />
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="boxNormal.h" />
-    <ClInclude Include="boxNormalTextured.h" />
-    <ClInclude Include="boxTextured.h" />
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="cameraGlide.h" />
-    <ClInclude Include="cameraFps.h" />
-    <ClInclude Include="iGpuDataLayer.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="light.h" />
-    <ClInclude Include="lightSourceCube.h" />
-    <ClInclude Include="mesh.h" />
-    <ClInclude Include="model.h" />
-    <ClInclude Include="Object3D.h" />
-    <ClInclude Include="rectangleTexture.h" />
-    <ClInclude Include="rectangleWrappingExperiment.h" />
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="texture.h" />
-    <ClInclude Include="textureZoomingExperiment.h" />
-    <ClInclude Include="triangleColours.h" />
-    <ClInclude Include="rectangleColoursTexture.h" />
-    <ClInclude Include="triangleLeft.h" />
-    <ClInclude Include="triangleRight.h" />
-    <ClInclude Include="twoTriangles.h" />
-    <ClInclude Include="util.h" />
-    <ClInclude Include="window.h" />
+    <ClCompile Include="src\**\*.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\**\*.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\**\*.vert" />
+    <None Include="shaders\**\*.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

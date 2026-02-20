@@ -16,9 +16,6 @@
     <Filter Include="Shader Files">
       <UniqueIdentifier>{3871768c-4f12-4984-9ab2-fdef9b97d737}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GpuDataLayer">
-      <UniqueIdentifier>{a7be14dc-0857-45a1-912d-279a26ba10a0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader Files\Fragment">
       <UniqueIdentifier>{56307fe8-e7d0-4012-8062-a666d8e942ff}</UniqueIdentifier>
     </Filter>
@@ -36,9 +33,6 @@
     <ClCompile Include="shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="triangle.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,106 +42,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
-    <None Include="vcpkg-configuration.json" />
     <None Include=".gitignore" />
-    <None Include="colorInput.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="colorTexture.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="positionInput.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="reverseSmiley.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="shader.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="texturesVariableMix.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="twoTextures.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="ambient.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="ambientDiffuse.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="lightSource.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="litNaive.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
     <None Include="phongView.frag">
       <Filter>Shader Files\Fragment</Filter>
     </None>
-    <None Include="phongWorld.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="colorInput.vert">
-      <Filter>Shader Files\Vertex</Filter>
-    </None>
-    <None Include="colorInputMoveRight.vert">
-      <Filter>Shader Files\Vertex</Filter>
-    </None>
-    <None Include="colorInputUpsideDown.vert">
-      <Filter>Shader Files\Vertex</Filter>
-    </None>
-    <None Include="colorTexture.vert">
-      <Filter>Shader Files\Vertex</Filter>
-    </None>
-    <None Include="matrixTransform.vert">
-      <Filter>Shader Files\Vertex</Filter>
-    </None>
-    <None Include="positionOut.vert">
-      <Filter>Shader Files\Vertex</Filter>
-    </None>
-    <None Include="shader.vert">
-      <Filter>Shader Files\Vertex</Filter>
-    </None>
     <None Include="mvpGouraud.vert">
-      <Filter>Shader Files\Vertex</Filter>
-    </None>
-    <None Include="mvpNormalView.vert">
-      <Filter>Shader Files\Vertex</Filter>
-    </None>
-    <None Include="mvpWithNormal.vert">
       <Filter>Shader Files\Vertex</Filter>
     </None>
     <None Include="mvpWithTexture.vert">
       <Filter>Shader Files\Vertex</Filter>
     </None>
-    <None Include="singlematerial.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
     <None Include="colorUniform.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="materialMaps.frag">
       <Filter>Shader Files\Fragment</Filter>
     </None>
     <None Include="materialMapsEmission.frag">
       <Filter>Shader Files\Fragment</Filter>
     </None>
-    <None Include="pointLight.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="directionalLight.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
     <None Include="mvpNormalTexture.vert">
       <Filter>Shader Files\Vertex</Filter>
-    </None>
-    <None Include="spotLight.frag">
-      <Filter>Shader Files\Fragment</Filter>
-    </None>
-    <None Include="multipleLights.frag">
-      <Filter>Shader Files\Fragment</Filter>
     </None>
     <None Include="mesh.frag">
       <Filter>Shader Files\Fragment</Filter>
@@ -160,35 +72,8 @@
     <ClInclude Include="shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="iGpuDataLayer.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="twoTriangles.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="triangleLeft.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="triangleRight.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="triangleColours.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
     <ClInclude Include="texture.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rectangleColoursTexture.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="rectangleWrappingExperiment.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="textureZoomingExperiment.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="rectangleTexture.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
     </ClInclude>
     <ClInclude Include="input.h">
       <Filter>Header Files</Filter>
@@ -208,25 +93,13 @@
     <ClInclude Include="util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Object3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="boxNormal.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="boxTextured.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="lightSourceCube.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="boxNormalTextured.h">
-      <Filter>Header Files\GpuDataLayer</Filter>
-    </ClInclude>
     <ClInclude Include="mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lightSourceCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
