@@ -16,6 +16,18 @@ Running the program opens an interactive scene used to experiment with camera, l
 - Debugging rendering issues and incorrect state
 - Refactoring tutorial code into reusable components
 
+## Debug Views
+
+The application includes debug views to visualize intermediate rendering results:
+
+- Normal visualization  
+- Depth visualization  
+- Diffuse texture visualization  
+- Lights visualization  
+
+Rendering state was inspected using RenderDoc during development.
+
+![Debug Views](resources/debug_views.gif)
 
 ## Building (Windows / Visual Studio)
 
