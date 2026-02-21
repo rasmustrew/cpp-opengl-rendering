@@ -2,6 +2,7 @@
 #include "core/input.h"
 
 #include <GLFW/glfw3.h>
+#include <graphics/shaderSelector.h>
 
 void SetupInput(GLFWwindow* window, WindowCallbackData& callbackData) {
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -39,7 +40,7 @@ void ScrollCallback(GLFWwindow* window, double, double yoffset) {
 	cam.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
-void ProcessKeyboardInput(GLFWwindow* window, Camera& cam, float deltaTime) {
+void ProcessKeyboardInput(GLFWwindow* window, Camera& cam, ShaderSelector& shaderSelector, float deltaTime) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
@@ -55,4 +56,6 @@ void ProcessKeyboardInput(GLFWwindow* window, Camera& cam, float deltaTime) {
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
 		cam.ProcessKeyboard(CameraMovement::RIGHT, deltaTime);
 	}
+
+	shaderSelector.ProcessInput(window);
 }

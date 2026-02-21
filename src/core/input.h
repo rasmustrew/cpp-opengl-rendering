@@ -1,6 +1,7 @@
 #pragma once
 
 #include "camera/camera.h"
+#include "graphics/shaderSelector.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -18,5 +19,5 @@ struct WindowCallbackData {
 void SetupInput(GLFWwindow* window, WindowCallbackData& callbackData);
 void MouseCallback(GLFWwindow* window, double xpos, double ypos);
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
-void ProcessKeyboardInput(GLFWwindow* window, Camera& cam, float deltaTime);
+void ProcessKeyboardInput(GLFWwindow* window, Camera& cam, ShaderSelector& shaderSelector, float deltaTime);
 
