@@ -17,6 +17,7 @@
 
 #include <iostream>
 #include <array>
+#include <filesystem>
 #include "graphics/shaderSelector.h"
 
 
@@ -35,9 +36,9 @@ namespace {
 
 }
 
-int main() {
+int main(int, char* argv[]) {
+	std::filesystem::current_path(std::filesystem::absolute(argv[0]).parent_path());
 	try {
-
 		/// -------------- Platform Setup --------------
 		stbi_set_flip_vertically_on_load(true);
 
